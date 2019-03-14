@@ -1,23 +1,35 @@
 #include <cstdlib>
-#include <cinttypes>
-#include <type_traits>
-#include <iostream>
-#include <typeinfo>
-#include "Module.h"
-#include "Value.h"
-#include "State.h"
-#include "Command.h"
-#include "Interpreter.h"
+#include "TemplateVM.h"
 
 int main(int argc, const char **argv) {
 	using I = Interpreter<Code<
-		PushCommand<IntValue<2>>,
-		PushCommand<IntValue<2>>,
+		JumpCommand<16>,
+// Procedure Factorial
+		PushCommand<IntValue<1>>,
+		SwapCommand,
+		DupCommand,
+		RotCommand,
 		OperationCommand<CommandOpcode::Multiply>,
-		PushCommand<IntValue<2>>,
-		OperationCommand<CommandOpcode::Add>
+		SwapCommand,
+		PushCommand<IntValue<1>>,
+		OperationCommand<CommandOpcode::Subtract>,
+		DupCommand,
+		PushCommand<IntValue<1>>,
+		CompareCommand,
+		TestCommand<0b10>,
+		JumpIfCommand<3>,
+		DropCommand,
+		RetCommand,
+// Call Factorial(5)
+		PushCommand<IntValue<5>>,
+		CallCommand<1>,
+		PrintCommand,
+// Call Factorial(10)
+		PushCommand<IntValue<10>>,
+		CallCommand<1>,
+		PrintCommand
 	>, EmptyState>;
 	using R = typename RunInterpreter<I>::Result;
-	std::cout << R::Stack::Pop::Value::Value << std::endl;
+	R::Print::flush(std::cout);
 	return EXIT_SUCCESS;
 }

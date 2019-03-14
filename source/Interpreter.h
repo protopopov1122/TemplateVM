@@ -23,7 +23,7 @@ class InterpreterResult_Impl {
 template <typename I>
 class InterpreterResult_Impl<I, typename std::enable_if_t<!std::is_same<typename I::Command, void>::value>> {
  public:
-	using NextPC = State<I::State::PC + 1, typename I::State::Stack>;
+	using NextPC = State<I::State::PC + 1, typename I::State::Stack, typename I::State::CallStack, typename I::State::Print>;
 	using Result = typename Interpret<typename I::Command, NextPC>::ResultState;
 };
 

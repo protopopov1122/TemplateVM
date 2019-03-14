@@ -1,6 +1,8 @@
 #ifndef STATE_H_
 #define STATE_H_
 
+#include "Output.h"
+
 template <template <typename ... Values> typename StackType, typename T, typename ... V>
 class Stack_Peek_Impl {
  public:
@@ -26,13 +28,15 @@ class Stack {
 	using Push = Stack<T, V...>;
 };
 
-template <std::size_t I, typename S>
+template <std::size_t I, typename S, typename C, typename P = EmptyPrinter>
 class State {
  public:
 	static constexpr std::size_t PC = I;
 	using Stack = S;
+	using Print = P;
+	using CallStack = C;
 };
 
-using EmptyState = State<0, Stack<>>;
+using EmptyState = State<0, Stack<>, Stack<>>;
 
 #endif
