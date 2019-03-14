@@ -19,8 +19,7 @@ struct Print_Impl<A, B...> {
 
 
 template <typename ... T>
-class Printer {
- public:
+struct Printer {
 	static void flush(std::ostream &os) {
 		Print_Impl<T...>::print(os);
 	};

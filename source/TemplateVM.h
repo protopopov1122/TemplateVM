@@ -5,6 +5,7 @@
 #include "Value.h"
 #include "State.h"
 #include "Command.h"
+#include "Interpret.h"
 #include "Interpreter.h"
 
 #endif

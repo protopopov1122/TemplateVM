@@ -4,8 +4,7 @@
 #include <cinttypes>
 
 template <typename T, T V>
-class AbstractValue {
- public:
+struct AbstractValue {
 	static constexpr T Value = V;
 };
 

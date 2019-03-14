@@ -16,8 +16,7 @@ template <std::size_t Index, typename T, typename ... I>
 struct Code_At_Impl<Index, T, I...> : public Code_At_Impl<Index - 1, I...> {};
 
 template <typename ... I>
-class Code {
- public:
+struct Code {
 	static constexpr std::size_t Length = sizeof...(I);
 	
 	template <std::size_t Index>
